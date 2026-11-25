@@ -1,0 +1,398 @@
+# =====================================================================
+#  atm-tr.com  (Astro statik site, Apache)
+#  OTOMATİK ÜRETİLİR: src/integrations/htaccess.mjs her build'de yazar.
+#  Elle değiştirmeyin; yönlendirmeler astro.config.mjs REDIRECTS'te.
+#  Tüm bloklar <IfModule> içinde: ilgili modül sunucuda yoksa
+#  kural sessizce atlanır, site 500 hatası vermez.
+# =====================================================================
+
+# --- Temel ayarlar ----------------------------------------------------
+DirectoryIndex index.html
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .txt .xml .webmanifest
+
+# Klasör içeriğinin listelenmesini kapat (_astro, images vb.)
+# Not: Site bu satır yüzünden "500 Internal Server Error" verirse
+# hosting bu ayara izin vermiyor demektir; satırı silin.
+Options -Indexes
+
+# --- Hata sayfası -----------------------------------------------------
+# Olmayan adres: sitenin kendi 404 sayfası, gerçek 404 koduyla. PHP yok.
+ErrorDocument 404 /404.html
+
+# --- Yönlendirmeler ---------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # --- Eski adresler -> yeni adresler (301) -------------------------
+    # Türkçe harfler UTF-8 bayt kodu olarak yazılır (\xC5\x9F = ş,
+    # \xC4\xB1 = ı ...). Astro'nun bu adresler için ürettiği sayfalar
+    # 301 değil 200 + meta refresh döner (Türkçe adlı klasörleri de
+    # sunucudaki zip açıcı bozuyor); gerçek 301'i bu kurallar verir.
+
+    # /22-25-ekim-2025-sodex-fuarindaydik/
+    RewriteRule ^22-25-ekim-2025-sodex-fuarindaydik/?$ https://atm-tr.com/blog/22-25-ekim-2025-sodex-fuarindaydik/ [R=301,NE,L]
+
+    # /en/we-were-at-the-sodex-fair-on-22-25-october-2025/
+    RewriteRule ^en/we-were-at-the-sodex-fair-on-22-25-october-2025/?$ https://atm-tr.com/en/blog/22-25-ekim-2025-sodex-fuarindaydik/ [R=301,NE,L]
+
+    # /17-21-mart-2025-ish-frankfurt-fuarindaydik/
+    RewriteRule ^17-21-mart-2025-ish-frankfurt-fuarindaydik/?$ https://atm-tr.com/blog/17-21-mart-2025-ish-frankfurt-fuarindaydik/ [R=301,NE,L]
+
+    # /en/we-were-at-the-ish-frankfurt-fair-from-17-to-21-march-2025/
+    RewriteRule ^en/we-were-at-the-ish-frankfurt-fair-from-17-to-21-march-2025/?$ https://atm-tr.com/en/blog/17-21-mart-2025-ish-frankfurt-fuarindaydik/ [R=301,NE,L]
+
+    # /20-24-ocak-2024-tarihleri-arasinda-sigep-rimini-fuarina-katildik/
+    RewriteRule ^20-24-ocak-2024-tarihleri-arasinda-sigep-rimini-fuarina-katildik/?$ https://atm-tr.com/blog/20-24-ocak-2024-tarihleri-arasinda-sigep-rimini-fuarina-katildik/ [R=301,NE,L]
+
+    # /en/we-were-at-the-sigep-rimini-fair-between-january-20-24-2024/
+    RewriteRule ^en/we-were-at-the-sigep-rimini-fair-between-january-20-24-2024/?$ https://atm-tr.com/en/blog/20-24-ocak-2024-tarihleri-arasinda-sigep-rimini-fuarina-katildik/ [R=301,NE,L]
+
+    # /en/we-will-be-at-sigep-rimini-fair-between-20-24-january-2024/
+    RewriteRule ^en/we-will-be-at-sigep-rimini-fair-between-20-24-january-2024/?$ https://atm-tr.com/en/blog/we-will-be-at-sigep-rimini-fair-between-20-24-january-2024/ [R=301,NE,L]
+
+    # /en/we-will-be-at-mce-milan-fair-between-12-15-march-2024/
+    RewriteRule ^en/we-will-be-at-mce-milan-fair-between-12-15-march-2024/?$ https://atm-tr.com/en/blog/we-will-be-at-mce-milan-fair-between-12-15-march-2024/ [R=301,NE,L]
+
+    # /12-15-mart2024-tarihleri-arasinda-mce-milano-fuarina-katildik/
+    RewriteRule ^12-15-mart2024-tarihleri-arasinda-mce-milano-fuarina-katildik/?$ https://atm-tr.com/blog/12-15-mart2024-tarihleri-arasinda-mce-milano-fuarina-katildik/ [R=301,NE,L]
+
+    # /sodex/
+    RewriteRule ^sodex/?$ https://atm-tr.com/blog/25-28-ekim-2023-sodex-istanbul-fuarina-katildik/ [R=301,NE,L]
+
+    # /13-17-mart-2023-ish-fuarina-katildik/
+    RewriteRule ^13-17-mart-2023-ish-fuarina-katildik/?$ https://atm-tr.com/blog/13-17-mart-2023-ish-fuarina-katildik/ [R=301,NE,L]
+
+    # /en/we-will-be-at-ish-fair-13-17-march-2023/
+    RewriteRule ^en/we-will-be-at-ish-fair-13-17-march-2023/?$ https://atm-tr.com/en/blog/13-17-mart-2023-ish-fuarina-katildik/ [R=301,NE,L]
+
+    # /26-subat-2-mart-2023-euroshop-fuarina-katildik/
+    RewriteRule ^26-subat-2-mart-2023-euroshop-fuarina-katildik/?$ https://atm-tr.com/blog/26-subat-2-mart-2023-euroshop-fuarina-katildik/ [R=301,NE,L]
+
+    # /en/26-subat-2-mart-2023-euroshop-fuarina-katildik/
+    RewriteRule ^en/26-subat-2-mart-2023-euroshop-fuarina-katildik/?$ https://atm-tr.com/en/blog/26-subat-2-mart-2023-euroshop-fuarina-katildik/ [R=301,NE,L]
+
+    # /de/26-subat-2-mart-2023-euroshop-fuarina-katildik/
+    RewriteRule ^de/26-subat-2-mart-2023-euroshop-fuarina-katildik/?$ https://atm-tr.com/de/blog/26-subat-2-mart-2023-euroshop-fuarina-katildik/ [R=301,NE,L]
+
+    # /ish-frankfurt-2023/
+    RewriteRule ^ish-frankfurt-2023/?$ https://atm-tr.com/blog/ish-frankfurt-2023/ [R=301,NE,L]
+
+    # /de/26-februar-2-maerz-2023-wir-sind-auf-der-euroshop-fair/
+    RewriteRule ^de/26-februar-2-maerz-2023-wir-sind-auf-der-euroshop-fair/?$ https://atm-tr.com/de/blog/26-februar-2-maerz-2023-wir-sind-auf-der-euroshop-fair/ [R=301,NE,L]
+
+    # /chillventa-2022-fuarina-katildik/
+    RewriteRule ^chillventa-2022-fuarina-katildik/?$ https://atm-tr.com/blog/chillventa-2022-fuarina-katildik/ [R=301,NE,L]
+
+    # /en/we-attended-chillventa-2022-fair/
+    RewriteRule ^en/we-attended-chillventa-2022-fair/?$ https://atm-tr.com/en/blog/chillventa-2022-fuarina-katildik/ [R=301,NE,L]
+
+    # /de/wir-haben-an-der-messe-chillventa-2022-besucht/
+    RewriteRule ^de/wir-haben-an-der-messe-chillventa-2022-besucht/?$ https://atm-tr.com/de/blog/chillventa-2022-fuarina-katildik/ [R=301,NE,L]
+
+    # /isk-sodex-fuarindaydik/
+    RewriteRule ^isk-sodex-fuarindaydik/?$ https://atm-tr.com/blog/isk-sodex-fuarindaydik/ [R=301,NE,L]
+
+    # /de/wir_waren_bei_isk_sodex/
+    RewriteRule ^de/wir_waren_bei_isk_sodex/?$ https://atm-tr.com/de/blog/isk-sodex-fuarindaydik/ [R=301,NE,L]
+
+    # /mostra-convegno-expocomfort-expobagno-2022ye-katildik/
+    RewriteRule ^mostra-convegno-expocomfort-expobagno-2022ye-katildik/?$ https://atm-tr.com/blog/mostra-convegno-expocomfort-expobagno-2022ye-katildik/ [R=301,NE,L]
+
+    # /en/we-attended-mostra-convegno-expocomfort-expobagno-2022/
+    RewriteRule ^en/we-attended-mostra-convegno-expocomfort-expobagno-2022/?$ https://atm-tr.com/en/blog/mostra-convegno-expocomfort-expobagno-2022ye-katildik/ [R=301,NE,L]
+
+    # /de/__trashed/
+    RewriteRule ^de/__trashed/?$ https://atm-tr.com/de/blog/mostra-convegno-expocomfort-expobagno-2022ye-katildik/ [R=301,NE,L]
+
+    # /de/wir-besuchten-die-chilventa-fair/
+    RewriteRule ^de/wir-besuchten-die-chilventa-fair/?$ https://atm-tr.com/de/blog/wir-besuchten-die-chilventa-fair/ [R=301,NE,L]
+
+    # /amerika-ces-fuari-vestel-standinde/
+    RewriteRule ^amerika-ces-fuari-vestel-standinde/?$ https://atm-tr.com/blog/amerika-ces-fuari-vestel-standinde/ [R=301,NE,L]
+
+    # /en/america-ces-fair-at-vestel-standin/
+    RewriteRule ^en/america-ces-fair-at-vestel-standin/?$ https://atm-tr.com/en/blog/amerika-ces-fuari-vestel-standinde/ [R=301,NE,L]
+
+    # /de/america-ces-fair-bei-vestel-standin/
+    RewriteRule ^de/america-ces-fair-bei-vestel-standin/?$ https://atm-tr.com/de/blog/amerika-ces-fuari-vestel-standinde/ [R=301,NE,L]
+
+    # /besim-oktayer-aydin-universitesinde/
+    RewriteRule ^besim-oktayer-aydin-universitesinde/?$ https://atm-tr.com/blog/besim-oktayer-aydin-universitesinde/ [R=301,NE,L]
+
+    # /en/besim-oktayer-at-aydin-university/
+    RewriteRule ^en/besim-oktayer-at-aydin-university/?$ https://atm-tr.com/en/blog/besim-oktayer-aydin-universitesinde/ [R=301,NE,L]
+
+    # /de/besim-oktayer-an-der-aydin-universitaet/
+    RewriteRule ^de/besim-oktayer-an-der-aydin-universitaet/?$ https://atm-tr.com/de/blog/besim-oktayer-aydin-universitesinde/ [R=301,NE,L]
+
+    # /subcon-2019a-katildik/
+    RewriteRule ^subcon-2019a-katildik/?$ https://atm-tr.com/blog/subcon-2019a-katildik/ [R=301,NE,L]
+
+    # /en/we-attended-subcon-2019/
+    RewriteRule ^en/we-attended-subcon-2019/?$ https://atm-tr.com/en/blog/subcon-2019a-katildik/ [R=301,NE,L]
+
+    # /de/wir-haben-an-der-subcon-2019-teilgenommen/
+    RewriteRule ^de/wir-haben-an-der-subcon-2019-teilgenommen/?$ https://atm-tr.com/de/blog/subcon-2019a-katildik/ [R=301,NE,L]
+
+    # /gebze-fabrikamizi-tasidik/
+    RewriteRule ^gebze-fabrikamizi-tasidik/?$ https://atm-tr.com/blog/gebze-fabrikamizi-tasidik/ [R=301,NE,L]
+
+    # /en/we-moved-our-gebze-factory/
+    RewriteRule ^en/we-moved-our-gebze-factory/?$ https://atm-tr.com/en/blog/gebze-fabrikamizi-tasidik/ [R=301,NE,L]
+
+    # /de/wir-sind-mit-unserer-gebze-fabrik-umgezogen/
+    RewriteRule ^de/wir-sind-mit-unserer-gebze-fabrik-umgezogen/?$ https://atm-tr.com/de/blog/gebze-fabrikamizi-tasidik/ [R=301,NE,L]
+
+    # /ahr-2020-orlandoya-katiliyoruz/
+    RewriteRule ^ahr-2020-orlandoya-katiliyoruz/?$ https://atm-tr.com/blog/ahr-2020-orlandoya-katiliyoruz/ [R=301,NE,L]
+
+    # /en/we-attended-ahr-orlando/
+    RewriteRule ^en/we-attended-ahr-orlando/?$ https://atm-tr.com/en/blog/ahr-2020-orlandoya-katiliyoruz/ [R=301,NE,L]
+
+    # /de/ahr-2020-orlandoya/
+    RewriteRule ^de/ahr-2020-orlandoya/?$ https://atm-tr.com/de/blog/ahr-2020-orlandoya-katiliyoruz/ [R=301,NE,L]
+
+    # /besim-oktayer-design-week-acilis-konusmasini-yapti/
+    RewriteRule ^besim-oktayer-design-week-acilis-konusmasini-yapti/?$ https://atm-tr.com/blog/besim-oktayer-design-week-acilis-konusmasini-yapti/ [R=301,NE,L]
+
+    # /en/besim-oktayer-delivered-design-week-opening-speech/
+    RewriteRule ^en/besim-oktayer-delivered-design-week-opening-speech/?$ https://atm-tr.com/en/blog/besim-oktayer-design-week-acilis-konusmasini-yapti/ [R=301,NE,L]
+
+    # /de/besim-oktayer-hielt-die-eroeffnungsrede-der-design-week/
+    RewriteRule ^de/besim-oktayer-hielt-die-eroeffnungsrede-der-design-week/?$ https://atm-tr.com/de/blog/besim-oktayer-design-week-acilis-konusmasini-yapti/ [R=301,NE,L]
+
+    # /bsh-usa-fabrikasini-turkhas-ile-birlikte-ziyaret-ettik/
+    RewriteRule ^bsh-usa-fabrikasini-turkhas-ile-birlikte-ziyaret-ettik/?$ https://atm-tr.com/blog/bsh-usa-fabrikasini-turkhas-ile-birlikte-ziyaret-ettik/ [R=301,NE,L]
+
+    # /hakkimizda/degerlerimiz
+    RewriteRule ^hakkimizda/degerlerimiz/?$ https://atm-tr.com/hakkimizda/#degerlerimiz [R=301,NE,L]
+
+    # /hakkimizda/yonetim-kadromuz
+    RewriteRule ^hakkimizda/yonetim-kadromuz/?$ https://atm-tr.com/hakkimizda/#yonetim-kadromuz [R=301,NE,L]
+
+    # /hakkimizda/markalar
+    RewriteRule ^hakkimizda/markalar/?$ https://atm-tr.com/hakkimizda/#uyeliklerimiz [R=301,NE,L]
+
+    # /en/about-us/our-values
+    RewriteRule ^en/about-us/our-values/?$ https://atm-tr.com/en/about-us/#our-values [R=301,NE,L]
+
+    # /en/about-us/key-personel
+    RewriteRule ^en/about-us/key-personel/?$ https://atm-tr.com/en/about-us/#management-team [R=301,NE,L]
+
+    # /de/uber-uns/unsere-werte
+    RewriteRule ^de/uber-uns/unsere-werte/?$ https://atm-tr.com/de/uber-uns/#unsere-werte [R=301,NE,L]
+
+    # /de/uber-uns/schluesselpersonal
+    RewriteRule ^de/uber-uns/schluesselpersonal/?$ https://atm-tr.com/de/uber-uns/#geschaeftsleitung [R=301,NE,L]
+
+    # /bize-ulasin
+    RewriteRule ^bize-ulasin/?$ https://atm-tr.com/iletisim/ [R=301,NE,L]
+
+    # /yetkinlikler/makine-imalati
+    RewriteRule ^yetkinlikler/makine-imalati/?$ https://atm-tr.com/yetkinlikler/#makine-imalati [R=301,NE,L]
+
+    # /yetkinlikler/jig-ve-fikstur-imalati
+    RewriteRule ^yetkinlikler/jig-ve-fikstur-imalati/?$ https://atm-tr.com/yetkinlikler/#jig-ve-fikstur-imalati [R=301,NE,L]
+
+    # /yetkinlikler/arge-organizasyonu
+    RewriteRule ^yetkinlikler/arge-organizasyonu/?$ https://atm-tr.com/yetkinlikler/#arge-organizasyonu [R=301,NE,L]
+
+    # /yetkinlikler/dijital-donusum
+    RewriteRule ^yetkinlikler/dijital-donusum/?$ https://atm-tr.com/yetkinlikler/#dijital-donusum [R=301,NE,L]
+
+    # /grup-sirketleri/malzeme-tedarik-yonetimi
+    RewriteRule ^grup-sirketleri/malzeme-tedarik-yonetimi/?$ https://atm-tr.com/grup-sirketleri/ [R=301,NE,L]
+
+    # /grup-sirketleri/malzeme-yonetim-makineleri-satisi
+    RewriteRule ^grup-sirketleri/malzeme-yonetim-makineleri-satisi/?$ https://atm-tr.com/grup-sirketleri/#malzeme-yonetim-makineleri-satisi [R=301,NE,L]
+
+    # /en/competencies/machine-manufacturing
+    RewriteRule ^en/competencies/machine-manufacturing/?$ https://atm-tr.com/en/competencies/#machine-manufacturing [R=301,NE,L]
+
+    # /en/competencies/jig-and-fixture-manufacturing
+    RewriteRule ^en/competencies/jig-and-fixture-manufacturing/?$ https://atm-tr.com/en/competencies/#jig-and-fixture-manufacturing [R=301,NE,L]
+
+    # /en/competencies/rd-organization
+    RewriteRule ^en/competencies/rd-organization/?$ https://atm-tr.com/en/competencies/#rd-organization [R=301,NE,L]
+
+    # /en/competencies/digital-transformation
+    RewriteRule ^en/competencies/digital-transformation/?$ https://atm-tr.com/en/competencies/#digital-transformation [R=301,NE,L]
+
+    # /en/competencies/quality-system
+    RewriteRule ^en/competencies/quality-system/?$ https://atm-tr.com/en/competencies/#quality-system [R=301,NE,L]
+
+    # /en/group-companies/material-procurement-management
+    RewriteRule ^en/group-companies/material-procurement-management/?$ https://atm-tr.com/en/group-companies/ [R=301,NE,L]
+
+    # /en/group-companies/material-management-machines-sales
+    RewriteRule ^en/group-companies/material-management-machines-sales/?$ https://atm-tr.com/en/group-companies/#material-management-machines-sales [R=301,NE,L]
+
+    # /de/kompetenzen/maschinenbau
+    RewriteRule ^de/kompetenzen/maschinenbau/?$ https://atm-tr.com/de/kompetenzen/#maschinenbau [R=301,NE,L]
+
+    # /de/kompetenzen/vorrichtungsbau
+    RewriteRule ^de/kompetenzen/vorrichtungsbau/?$ https://atm-tr.com/de/kompetenzen/#vorrichtungsbau [R=301,NE,L]
+
+    # /de/kompetenzen/fe-organisation
+    RewriteRule ^de/kompetenzen/fe-organisation/?$ https://atm-tr.com/de/kompetenzen/#fe-organisation [R=301,NE,L]
+
+    # /de/kompetenzen/digitale-transformation
+    RewriteRule ^de/kompetenzen/digitale-transformation/?$ https://atm-tr.com/de/kompetenzen/#digitale-transformation [R=301,NE,L]
+
+    # /de/kompetenzen/qualitaetssystem
+    RewriteRule ^de/kompetenzen/qualitaetssystem/?$ https://atm-tr.com/de/kompetenzen/#qualitaetssystem [R=301,NE,L]
+
+    # /de/unternehmen-der-gruppe/materialbeschaffungsmanagement
+    RewriteRule ^de/unternehmen-der-gruppe/materialbeschaffungsmanagement/?$ https://atm-tr.com/de/unternehmen-der-gruppe/ [R=301,NE,L]
+
+    # /de/unternehmen-der-gruppe/industrielle-verkaufsautomaten
+    RewriteRule ^de/unternehmen-der-gruppe/industrielle-verkaufsautomaten/?$ https://atm-tr.com/de/unternehmen-der-gruppe/#industrielle-verkaufsautomaten [R=301,NE,L]
+
+    # /de/unternehmen-der-gruppe/verkauf-von-lueftern-und-motoren
+    RewriteRule ^de/unternehmen-der-gruppe/verkauf-von-lueftern-und-motoren/?$ https://atm-tr.com/de/unternehmen-der-gruppe/ [R=301,NE,L]
+
+    # /wp-content/uploads/2024/10/ATM-COILS-TUBE-TECHNOLOGIES-2024.pdf
+    RewriteRule ^wp-content/uploads/2024/10/ATM-COILS-TUBE-TECHNOLOGIES-2024\.pdf/?$ https://atm-tr.com/urunler/katalog.pdf [R=301,NE,L]
+
+    # /en/low-maintenance-atm-condenser-units
+    RewriteRule ^en/low-maintenance-atm-condenser-units/?$ https://atm-tr.com/en/wire-on-tube-condensers/low-maintenance-atm-condensers-patented/ [R=301,NE,L]
+
+    # /de/wartungsarme-atm-kondensatoreinheiten
+    RewriteRule ^de/wartungsarme-atm-kondensatoreinheiten/?$ https://atm-tr.com/de/drahtrohrverfluessiger/wartungsarme-atm-verfluessiger/ [R=301,NE,L]
+
+    # /yazilimlar/soguk-oda-hesaplama-programi
+    RewriteRule ^yazilimlar/soguk-oda-hesaplama-programi/?$ https://atm-tr.com/yazilimlar/ [R=301,NE,L]
+
+    # /yazilimlar/yaprakli-esanjor-urun-secim-programi
+    RewriteRule ^yazilimlar/yaprakli-esanjor-urun-secim-programi/?$ https://atm-tr.com/yazilimlar/ [R=301,NE,L]
+
+    # /yazilimlar/dusuk-bakimli-atm-kondanser-secimi
+    RewriteRule ^yazilimlar/dusuk-bakimli-atm-kondanser-secimi/?$ https://atm-tr.com/yazilimlar/ [R=301,NE,L]
+
+    # /en/softwares/cold-room-calculation
+    RewriteRule ^en/softwares/cold-room-calculation/?$ https://atm-tr.com/en/softwares/ [R=301,NE,L]
+
+    # /en/softwares/leafy-heat-exchanger-product-selection
+    RewriteRule ^en/softwares/leafy-heat-exchanger-product-selection/?$ https://atm-tr.com/en/softwares/ [R=301,NE,L]
+
+    # /en/softwares/low-maintenance-atm-condenser-units
+    RewriteRule ^en/softwares/low-maintenance-atm-condenser-units/?$ https://atm-tr.com/en/softwares/ [R=301,NE,L]
+
+    # /en/human-resources
+    RewriteRule ^en/human-resources/?$ https://atm-tr.com/en/careers/#hr-policy [R=301,NE,L]
+
+    # /en/human-resources/our-human-resources-policy
+    RewriteRule ^en/human-resources/our-human-resources-policy/?$ https://atm-tr.com/en/careers/#hr-policy [R=301,NE,L]
+
+    # /de/personalwesen
+    RewriteRule ^de/personalwesen/?$ https://atm-tr.com/de/karriere/#personalpolitik [R=301,NE,L]
+
+    # /de/buisvorming
+    RewriteRule ^de/buisvorming/?$ https://atm-tr.com/de/rohrformung/ [R=301,NE,L]
+
+    # /de/buisvorming/apparaat-buizen
+    RewriteRule ^de/buisvorming/apparaat-buizen/?$ https://atm-tr.com/de/rohrformung/rohre-fuer-haushaltsgeraete/ [R=301,NE,L]
+
+    # /de/buisvorming/hvac-buizen
+    RewriteRule ^de/buisvorming/hvac-buizen/?$ https://atm-tr.com/de/rohrformung/rohre-fuer-klimageraete/ [R=301,NE,L]
+
+    # http -> https
+    # Cloudflare arkasında döngüye girmemesi için ziyaretçinin gerçek
+    # protokolünü X-Forwarded-Proto başlığından okur.
+    RewriteCond %{HTTP:X-Forwarded-Proto} =http
+    RewriteRule ^ https://atm-tr.com%{REQUEST_URI} [R=301,L]
+
+    # www.atm-tr.com -> atm-tr.com
+    RewriteCond %{HTTP_HOST} ^www\.atm-tr\.com$ [NC]
+    RewriteRule ^ https://atm-tr.com%{REQUEST_URI} [R=301,L]
+
+    # Sonunda / olmayan klasör adresi -> tek adımda https + / (Apache'nin
+    # kendi yönlendirmesi Cloudflare arkasında önce http'ye gidiyor)
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^(.*[^/])$ https://atm-tr.com/$1/ [R=301,L]
+
+    # --- 404 yedeği (normalde KAPALI) ---------------------------------
+    # Normalde yukarıdaki ErrorDocument yeterli (gerçek 404 kodu). Hosting
+    # onu ezerse (canlıda olmayan bir adreste hosting'in kendi sayfası
+    # çıkarsa) bir sonraki satırın başındaki # işaretini kaldırın: olmayan
+    # adresler 404 sayfasına içeriden aktarılır. Durum kodu o zaman 200
+    # olur; 404 sayfaları noindex taşıdığı için Google onları dizine almaz.
+    # (Kalıcı yapmak için: astro.config.mjs'te htaccess({ fallback404: true }).)
+    # RewriteRule ^ - [E=FALLBACK404:1]
+
+    RewriteCond %{ENV:FALLBACK404} =1
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d [OR]
+    RewriteCond %{REQUEST_FILENAME}/index.html !-f
+    RewriteRule ^ - [E=NOTFOUND:1]
+
+    RewriteCond %{ENV:NOTFOUND} =1
+    RewriteRule ^ /404.html [L]
+
+    # index.html'i olmayan klasörler (_astro/, images/ ...): çıplak
+    # "403 Forbidden" yerine 404 (yukarıdaki ErrorDocument sayfası)
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_FILENAME}/index.html !-f
+    RewriteRule ^ - [R=404,L]
+</IfModule>
+
+# --- MIME türleri -----------------------------------------------------
+<IfModule mod_mime.c>
+    AddType application/manifest+json  .webmanifest
+    AddType font/woff2                 .woff2
+    AddType image/webp                 .webp
+    AddType image/svg+xml              .svg
+    AddType video/mp4                  .mp4
+    AddType text/plain                 .txt
+</IfModule>
+
+# --- Sıkıştırma -------------------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE application/javascript text/javascript
+    AddOutputFilterByType DEFLATE application/xml application/json
+    AddOutputFilterByType DEFLATE application/manifest+json image/svg+xml
+</IfModule>
+
+# --- Tarayıcı önbelleği -----------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault                          "access plus 1 week"
+
+    # HTML ve site haritaları: her zaman güncel sürüm kontrol edilsin
+    ExpiresByType text/html                 "access plus 0 seconds"
+    ExpiresByType application/xml           "access plus 0 seconds"
+    ExpiresByType text/xml                  "access plus 0 seconds"
+    ExpiresByType text/plain                "access plus 1 hour"
+    ExpiresByType application/manifest+json "access plus 1 week"
+
+    # JS/CSS sadece _astro/ içinde ve dosya adları hash'li -> uzun süre
+    ExpiresByType application/javascript    "access plus 1 year"
+    ExpiresByType text/javascript           "access plus 1 year"
+    ExpiresByType text/css                  "access plus 1 year"
+
+    # Görsel, video, font
+    ExpiresByType image/webp                "access plus 1 month"
+    ExpiresByType image/jpeg                "access plus 1 month"
+    ExpiresByType image/png                 "access plus 1 month"
+    ExpiresByType image/svg+xml             "access plus 1 month"
+    ExpiresByType image/x-icon              "access plus 1 month"
+    ExpiresByType image/vnd.microsoft.icon  "access plus 1 month"
+    ExpiresByType video/mp4                 "access plus 1 month"
+    ExpiresByType font/woff2                "access plus 1 year"
+</IfModule>
+
+# --- Güvenlik başlıkları ----------------------------------------------
+<IfModule mod_headers.c>
+    # deploy/nginx-security-headers.conf ile aynı başlıklar.
+    Header always set Content-Security-Policy "frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'; require-trusted-types-for 'script'"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    # HSTS 1. aşama (5 dk). HTTPS bir hafta sorunsuz çalışınca 31536000 yapın.
+    Header always set Strict-Transport-Security "max-age=300"
+    Header unset X-Powered-By
+</IfModule>
